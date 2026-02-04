@@ -10,7 +10,7 @@ db.users.insertMany([
         },
         "favorites": [
             {
-                "boutiqueId": "boutique456",
+                "shopId": "boutique456",
                 "addedAt": "2026-01-30"
             }
         ],
@@ -33,7 +33,7 @@ db.users.insertMany([
                     "label": "New product"
                 },
                 "payload": {
-                    "boutiqueId": "boutique456",
+                    "shopId": "boutique456",
                     "productId": "product789"
                 },
                 "message": "Nouveau produit chez votre boutique favori",
