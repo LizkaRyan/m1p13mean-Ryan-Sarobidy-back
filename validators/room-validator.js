@@ -13,7 +13,26 @@ const roomSchema = yup.object({
     length: yup.number().positive("La longueur doit être positive").required("Longueur requise"),
     width: yup.number().positive("La largeur doit être positive").required("Largeur requise"),
     height: yup.number().positive("La hauteur doit être positive").required("Hauteur requise"),
-  }).required("Dimensions requises")
+  }).required("Dimensions requises"),
+  deletedAt:yup.date("La date de suppression doit être une date").nullable()
 });
 
-module.exports = roomSchema;
+const patchRoomSchema = yup.object({
+  name: yup.string(),
+  rentPrice: yup.number(),
+  status: yup.object({
+    code: yup.string(),
+    label: yup.string()
+  }),
+  floor: yup.string().nullable(),
+  capacity: yup.number(),
+  dimensions: yup.object({
+    length: yup.number(),
+    width: yup.number(),
+    height: yup.number(),
+    area: yup.number()
+  }),
+  deletedAt:yup.date("La date de suppression doit être une date").nullable()
+});
+
+module.exports = { roomSchema, patchRoomSchema };

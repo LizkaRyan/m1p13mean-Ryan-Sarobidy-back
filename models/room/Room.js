@@ -9,6 +9,7 @@ const roomSchema = new mongoose.Schema({
     floor: Number,
     capacity: Number,
     dimensions: dimensionSchema,
+    deletedAt: { type: Date, default: null }
 });
 
 roomSchema.pre('save', async function () {
@@ -23,7 +24,7 @@ roomSchema.pre('findOneAndUpdate', async function () {
         update.$set.dimensions.area = update.$set.dimensions.length * update.$set.dimensions.width;
     }
 
-    if (update.dimensions.length || update.dimensions.height) {
+    if (update.dimensions && (update.dimensions.length || update.dimensions.height)) {
         update.dimensions.area = update.dimensions.length * update.dimensions.width;
     }
 });
