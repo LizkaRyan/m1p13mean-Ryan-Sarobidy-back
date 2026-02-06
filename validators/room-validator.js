@@ -13,7 +13,6 @@ const roomSchema = yup.object({
     length: yup.number().positive("La longueur doit être positive").required("Longueur requise"),
     width: yup.number().positive("La largeur doit être positive").required("Largeur requise"),
     height: yup.number().positive("La hauteur doit être positive").required("Hauteur requise"),
-    area: yup.number().positive("La surface doit être positive").required("Surface requise")
   }).required("Dimensions requises")
 });
 

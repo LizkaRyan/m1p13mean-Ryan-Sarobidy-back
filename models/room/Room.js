@@ -19,11 +19,11 @@ roomSchema.pre('save', async function () {
 roomSchema.pre('findOneAndUpdate', async function () {
     const update = this.getUpdate();
 
-    if (update.$set && (update.$set.length || update.$set.height)) {
+    if (update.$set && (update.$set.dimensions.length || update.$set.dimensions.height)) {
         update.$set.dimensions.area = update.$set.dimensions.length * update.$set.dimensions.width;
     }
 
-    if (update.length || update.height) {
+    if (update.dimensions.length || update.dimensions.height) {
         update.dimensions.area = update.dimensions.length * update.dimensions.width;
     }
 });
