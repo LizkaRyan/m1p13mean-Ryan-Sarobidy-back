@@ -14,4 +14,12 @@ const save = async (req, res) => {
     }
 };
 
-module.exports = { save };
+const getAll = async (req, res) => {
+    try {
+        return res.status(200).json(await Room.find());
+    } catch (err) {
+        return res.status(500).json({ message: "Erreur serveur", error: err.message });
+    }
+}
+
+module.exports = { save, getAll };
