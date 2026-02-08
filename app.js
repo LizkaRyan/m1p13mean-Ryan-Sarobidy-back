@@ -6,6 +6,8 @@ var logger = require('morgan');
 require('dotenv').config();
 const cors = require('cors');
 
+const authMiddleware = require('./middlewares/authMiddleware');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -25,6 +27,7 @@ app.use(cors({
   origin: process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }));
+app.use(authMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
