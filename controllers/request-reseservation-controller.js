@@ -3,7 +3,7 @@ const { patchRequestReservationSchema } = require("../validators/request-reserva
 
 const findAll = async (req, res) => {
   try {
-    const requests = await RequestReservation.find({ validated: null });
+    const requests = await RequestReservation.find({ validated: null }).populate('shopId').populate('roomId');
 
     res.json(requests);
   } catch (err) {
@@ -26,7 +26,7 @@ const patch = async (req, res) => {
     if (!updatedRequestReservation) {
       return res.status(404).json({ message: "Demande de réservation non trouvée" });
     }
-    res.status(200).json(await RequestReservation.find({ validated: null }));
+    res.status(200).json(await RequestReservation.find({ validated: null }).populate('shopId').populate('roomId'));
   } catch (err) {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
