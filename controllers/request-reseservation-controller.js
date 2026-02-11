@@ -1,6 +1,7 @@
 const RequestReservation = require('../models/requests-reservation/RequestReservation');
 const { patchRequestReservationSchema } = require("../validators/request-reservation-validator");
 const { createReservation } = require('../services/ReservationService');
+const { updateRoomAvailability } = require('../services/RoomService');
 
 const findAll = async (req, res) => {
   try {
@@ -35,6 +36,7 @@ const patch = async (req, res) => {
         beginingDate: updatedRequestReservation.beginingDate,
         endingDate: updatedRequestReservation.endingDate
       });
+      await updateRoomAvailability(updatedRequestReservation.roomId._id, false);
     }
 
     res.status(200).json(await RequestReservation.find({ validated: null }).populate('shopId').populate('roomId'));
