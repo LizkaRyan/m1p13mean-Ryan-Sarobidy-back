@@ -103,5 +103,6 @@ db.requestsReservation.insertMany([
         "roomId": ObjectId('6988d13bf45d21d2d1137468'),
         "beginingDate": "2026-02-15",
         "endingDate": "2026-05-15",
+        "validated": null,
     }
 ]);

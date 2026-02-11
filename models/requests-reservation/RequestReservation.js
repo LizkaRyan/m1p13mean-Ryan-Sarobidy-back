@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { boolean } = require('yup');
 
 const requestsReservationSchema = new mongoose.Schema({
     shopId: {
@@ -13,6 +14,7 @@ const requestsReservationSchema = new mongoose.Schema({
     },
     beginingDate: Date,
     endingDate: Date,
+    validated: { type: Boolean, default: null }
 });
 
 module.exports = mongoose.model('RequestsReservation', requestsReservationSchema, 'requestsReservation');
