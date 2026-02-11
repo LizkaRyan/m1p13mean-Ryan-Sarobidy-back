@@ -1,6 +1,6 @@
 const Room = require('../models/room/Room');
 
-const findDisponible = async () => {
+const findAllNotDeleted = async () => {
     try {
         const rooms = await Room.find({ deletedAt: null });
         return rooms;
@@ -28,4 +28,4 @@ const updateRoomAvailability = async (id, isAvailable) => {
     }
 }
 
-module.exports = { findDisponible, updateRoomAvailability };
+module.exports = { findAllNotDeleted, updateRoomAvailability };

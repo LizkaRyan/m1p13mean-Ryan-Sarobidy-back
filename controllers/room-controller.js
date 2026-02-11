@@ -1,6 +1,6 @@
 const Room = require('../models/room/Room');
 const { roomSchema, patchRoomSchema } = require("../validators/room-validator");
-const { findDisponible } = require('../services/RoomService');
+const { findAllNotDeleted } = require('../services/RoomService');
 const mongoose = require("mongoose");
 
 const save = async (req, res) => {
@@ -8,7 +8,7 @@ const save = async (req, res) => {
         await roomSchema.validate(req.body);
         const room = req.body;
         await Room.create(room);
-        res.status(201).json(await findDisponible());
+        res.status(201).json(await findAllNotDeleted());
     } catch (err) {
         return res.status(400).json({
             message: "Validation échouée",
@@ -19,7 +19,7 @@ const save = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        return res.status(200).json(await findDisponible());
+        return res.status(200).json(await findAllNotDeleted());
     } catch (err) {
         return res.status(500).json({ message: "Erreur serveur", error: err.message });
     }
@@ -42,7 +42,7 @@ const put = async (req, res) => {
             return res.status(404).json({ message: "Salle non trouvée" });
         }
 
-        res.status(200).json(await findDisponible());
+        res.status(200).json(await findAllNotDeleted());
     }
     catch (err) {
         res.status(500).json({ message: "Erreur serveur", error: err.message });
@@ -74,7 +74,7 @@ const patch = async (req, res) => {
 
         await session.commitTransaction();
 
-        res.status(200).json(await findDisponible());
+        res.status(200).json(await findAllNotDeleted());
     } catch (err) {
         await session.abortTransaction();
         res.status(500).json({ message: "Erreur serveur", error: err.message });

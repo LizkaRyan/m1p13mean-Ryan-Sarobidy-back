@@ -71,6 +71,51 @@ db.users.insertMany([
     }
 ])
 
+db.rooms.insertMany([
+  {
+    _id: ObjectId('698c97f6d0bdcba2131f0c99'),
+    name: 'Box 1',
+    rentPrice: 135000,
+    status: {
+      code: 'AVAILABLE',
+      label: 'Disponible',
+      _id: ObjectId('698c97f6d0bdcba2131f0c96')
+    },
+    floor: 1,
+    capacity: 25,
+    dimensions: {
+      length: 10,
+      height: 3,
+      width: 5,
+      area: 50,
+      _id: ObjectId('698c97f6d0bdcba2131f0c97')
+    },
+    deletedAt: null,
+    __v: 0
+  },
+  {
+    _id: ObjectId('698c9820d0bdcba2131f0ca0'),
+    name: 'Box 2',
+    rentPrice: 250000,
+    status: {
+      code: 'AVAILABLE',
+      label: 'Disponible',
+      _id: ObjectId('698c9ff92e3ae09562191633')
+    },
+    floor: 1,
+    capacity: 40,
+    dimensions: {
+      length: 15,
+      height: 3,
+      width: 10,
+      area: 150,
+      _id: ObjectId('698c9820d0bdcba2131f0c9e')
+    },
+    deletedAt: null,
+    __v: 0
+  }
+]);
+
 db.users.insertOne({
     "_id": ObjectId('698c5124a4c7623a67cb0ce2'),
     "email": "Rakoto@gmail.com",
@@ -100,9 +145,9 @@ db.requestsReservation.insertMany([
     {
         "_id": ObjectId('698c53fba4c7623a67cb0ce4'),
         "shopId": ObjectId("698c5222a4c7623a67cb0ce3"),
-        "roomId": ObjectId('6988d13bf45d21d2d1137468'),
-        "beginingDate": "2026-02-15",
-        "endingDate": "2026-05-15",
+        "roomId": ObjectId('698c9820d0bdcba2131f0ca0'),
+        "beginingDate": ISODate("2026-02-15T00:00:00"),
+        "endingDate": ISODate("2026-05-15T00:00:00"),
         "validated": null,
     }
 ]);

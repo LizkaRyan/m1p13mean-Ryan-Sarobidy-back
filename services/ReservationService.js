@@ -21,12 +21,11 @@ function generateMonthlyPayments(startDate, endDate, amount) {
 
   while (current <= end) {
     const monthStr = current.toISOString().slice(0, 7); // "YYYY-MM"
-    const paidAt = current.getTime() === new Date(startDate).getTime() ? current.toISOString().slice(0, 10) : null;
 
     payments.push({
       month: monthStr,
       amount: amount,
-      paidAt: paidAt,
+      paidAt: null,
       status: "PENDING"
     });
 
