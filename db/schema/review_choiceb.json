@@ -1,0 +1,19 @@
+[
+    {
+        "_id": "resp1",
+        "reviewId": "avis123",
+        "parentId": null,          
+        "userId": "boutique456",
+        "text": "Merci pour votre retour",
+        "createdAt": "2026-01-31"
+    },
+    {
+        "_id": "resp2",
+        "reviewId": "avis123",
+        "parentId": "resp1",        
+        "userId": "user123",
+        "text": "Avec plaisir !",
+        "createdAt": "2026-02-01"
+    }
+
+]

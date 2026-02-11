@@ -1,0 +1,19 @@
+[
+    {
+        "_id": "room789",
+        "name": "Chambre 1",
+        "rentPrice": 120,
+        "status": {
+            "code": "AVAILABLE",
+            "label": "AVAILABLE"
+        },
+        "localizationDesc": "Étage 2",
+        "capacity": 4,
+        "dimensions": {
+            "length": 5,
+            "width": 4,
+            "height": 3,
+            "area": 20
+        }
+    }
+]

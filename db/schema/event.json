@@ -1,0 +1,22 @@
+[
+    {
+        "_id": "event123",
+        "title": "Soldes d’hiver",
+        "boutiqueId": "boutique456",
+        "startDate": "2026-02-01",
+        "endDate": "2026-02-15",
+        "description": "Text",
+        "createdAt": "2026-01-31",
+        "themes": ["collection", "solde"]
+    },
+    {
+        "_id": "event456",
+        "title": "Fête de la musique",
+        "boutiqueId": null,
+        "startDate": "2026-02-01",
+        "endDate": "2026-02-15",
+        "description": "Text",
+        "createdAt": "2026-01-31",
+        "themes": ["music", "festival"]
+    }
+]

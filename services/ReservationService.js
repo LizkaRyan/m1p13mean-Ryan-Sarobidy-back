@@ -1,3 +1,18 @@
+const Reservation = require('../models/reservation/Reservation');
+
+const createReservation = async ({shopId, room, beginingDate, endingDate}) => {
+    const newReservation = {
+        shopId: shopId,
+        roomId: room._id,
+        createdAt: new Date(),
+        paymentHistory: generateMonthlyPayments(beginingDate, endingDate, room.rentPrice)
+    };
+    try {
+        await Reservation.create(newReservation);
+    } catch (err) {
+        throw new Error('Erreur lors de la création de la réservation : ' + err.message);
+    }
+}
 
 function generateMonthlyPayments(startDate, endDate, amount) {
   const payments = [];
@@ -22,9 +37,4 @@ function generateMonthlyPayments(startDate, endDate, amount) {
   return payments;
 }
 
-// Exemple d'utilisation :
-const start = "2026-02-01";
-const end = "2026-03-31";
-const amount = 1500.00;
-
-console.log(generateMonthlyPayments(start, end, amount));
+module.exports = { createReservation };

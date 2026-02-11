@@ -1,0 +1,22 @@
+[
+    {
+        "_id": "rental123",
+        "shopId": "boutique456",
+        "roomId": "room789",
+        "createdAt": "2026-01-31T10:00:00Z",
+        "paymentHistory": [
+            {
+                "month": "2026-02",
+                "amount": 1500.00,
+                "paidAt": "2026-02-01",
+                "status": "PAID"
+            },
+            {
+                "month": "2026-03",
+                "amount": 1500.00,
+                "paidAt": null,
+                "status": "PENDING"
+            }
+        ]
+    }
+]
