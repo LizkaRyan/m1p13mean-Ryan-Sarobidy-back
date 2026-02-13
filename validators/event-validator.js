@@ -11,4 +11,15 @@ const eventValidator = yup.object({
     "color": yup.string().required()
 });
 
-module.exports = { eventValidator };
+const patchEventValidator = yup.object({
+    "title": yup.string(),
+    "shopId": yup.string().nullable(),
+    "startDate": yup.date(),
+    "endDate": yup.date(),
+    "description": yup.string(),
+    "createdAt": yup.date(),
+    "themes": yup.array().of(yup.string()),
+    "color": yup.string()
+});
+
+module.exports = { eventValidator, patchEventValidator };
