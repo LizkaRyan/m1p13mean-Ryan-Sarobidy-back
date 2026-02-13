@@ -9,11 +9,11 @@ const cors = require('cors');
 const authMiddleware = require('./middlewares/authMiddleware');
 
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth-router');
 var roomRouter = require('./routes/room-router');
 var requestReservationRouter = require('./routes/requests-reservation-router');
+var eventRouter = require('./routes/event-router');
 var db = require('./config/db');
 
 var app = express();
@@ -30,12 +30,11 @@ app.use(cors({
 }));
 app.use(authMiddleware);
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/rooms', roomRouter);
 app.use('/requests-reservation', requestReservationRouter);
-
+app.use('/events', eventRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

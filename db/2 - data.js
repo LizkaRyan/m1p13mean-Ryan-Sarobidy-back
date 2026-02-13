@@ -72,48 +72,48 @@ db.users.insertMany([
 ])
 
 db.rooms.insertMany([
-  {
-    _id: ObjectId('698c97f6d0bdcba2131f0c99'),
-    name: 'Box 1',
-    rentPrice: 135000,
-    status: {
-      code: 'AVAILABLE',
-      label: 'Disponible',
-      _id: ObjectId('698c97f6d0bdcba2131f0c96')
+    {
+        _id: ObjectId('698c97f6d0bdcba2131f0c99'),
+        name: 'Box 1',
+        rentPrice: 135000,
+        status: {
+            code: 'AVAILABLE',
+            label: 'Disponible',
+            _id: ObjectId('698c97f6d0bdcba2131f0c96')
+        },
+        floor: 1,
+        capacity: 25,
+        dimensions: {
+            length: 10,
+            height: 3,
+            width: 5,
+            area: 50,
+            _id: ObjectId('698c97f6d0bdcba2131f0c97')
+        },
+        deletedAt: null,
+        __v: 0
     },
-    floor: 1,
-    capacity: 25,
-    dimensions: {
-      length: 10,
-      height: 3,
-      width: 5,
-      area: 50,
-      _id: ObjectId('698c97f6d0bdcba2131f0c97')
-    },
-    deletedAt: null,
-    __v: 0
-  },
-  {
-    _id: ObjectId('698c9820d0bdcba2131f0ca0'),
-    name: 'Box 2',
-    rentPrice: 250000,
-    status: {
-      code: 'AVAILABLE',
-      label: 'Disponible',
-      _id: ObjectId('698c9ff92e3ae09562191633')
-    },
-    floor: 1,
-    capacity: 40,
-    dimensions: {
-      length: 15,
-      height: 3,
-      width: 10,
-      area: 150,
-      _id: ObjectId('698c9820d0bdcba2131f0c9e')
-    },
-    deletedAt: null,
-    __v: 0
-  }
+    {
+        _id: ObjectId('698c9820d0bdcba2131f0ca0'),
+        name: 'Box 2',
+        rentPrice: 250000,
+        status: {
+            code: 'AVAILABLE',
+            label: 'Disponible',
+            _id: ObjectId('698c9ff92e3ae09562191633')
+        },
+        floor: 1,
+        capacity: 40,
+        dimensions: {
+            length: 15,
+            height: 3,
+            width: 10,
+            area: 150,
+            _id: ObjectId('698c9820d0bdcba2131f0c9e')
+        },
+        deletedAt: null,
+        __v: 0
+    }
 ]);
 
 db.users.insertOne({
@@ -151,3 +151,43 @@ db.requestsReservation.insertMany([
         "validated": null,
     }
 ]);
+
+db.events.insertMany([
+    {
+        "_id": ObjectId('698ef6c131fd509f68cb0ce2'),
+        "title": "Soldes d’hiver",
+        "shopId": ObjectId("698c5222a4c7623a67cb0ce3"),
+        "startDate": ISODate("2026-02-07"),
+        "endDate": ISODate("2026-02-13"),
+        "description": "Text",
+        "createdAt": "2026-01-31",
+        "themes": ["collection", "solde"],
+        "color": "#2E86C1",
+        "deletedAt": null
+    },
+    {
+        "_id": ObjectId('698ef6c131fd509f68cb0ce3'),
+        "title": "Fête de la musique",
+        "shopId": null,
+        "startDate": ISODate("2026-02-01"),
+        "endDate": ISODate("2026-02-15"),
+        "description": "Text",
+        "createdAt": "2026-01-31",
+        "themes": ["music", "festival"],
+        "color": "#e11b22",
+        "deletedAt": null
+    }
+]);
+
+db.events.insertOne({
+    "_id": ObjectId('698ef6c131fd509f68cb0ce4'),
+    "title": "Fête de la musique",
+    "shopId": null,
+    "startDate": ISODate("2025-12-01"),
+    "endDate": ISODate("2025-12-15"),
+    "description": "Text",
+    "createdAt": "2026-01-31",
+    "themes": ["music", "festival"],
+    "color": "#e11b22",
+    "deletedAt": null
+});

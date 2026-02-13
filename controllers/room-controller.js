@@ -68,8 +68,8 @@ const patch = async (req, res) => {
             return res.status(404).json({ message: "Salle non trouvée" });
         }
 
-        if(updateData.deletedAt!=null && updatedRoom.status.code === "AVAILABLE"){
-            throw new Error("Impossible de supprimer une salle disponible");
+        if(updateData.deletedAt!=null && updatedRoom.status.code !== "AVAILABLE"){
+            throw new Error("Impossible de supprimer une salle non disponible");
         }
 
         await session.commitTransaction();
