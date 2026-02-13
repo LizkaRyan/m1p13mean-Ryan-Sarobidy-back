@@ -6,7 +6,8 @@ const findByYear = async (year) => {
         let filter = {};
         if (year) {
             filter = {
-                $expr: { $eq: [{ $year: "$startDate", $year: "$endDate" }, parseInt(year)] }
+                $expr: { $eq: [{ $year: "$startDate", $year: "$endDate" }, parseInt(year)] },
+                deletedAt: null
             };
         }
 

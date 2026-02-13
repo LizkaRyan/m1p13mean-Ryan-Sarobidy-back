@@ -13,7 +13,8 @@ const eventSchema = new mongoose.Schema({
         required: false,
         default: null
     },
-    color: String
+    color: String,
+    deletedAt: {type: Date, default: null}
 });
 
 module.exports = mongoose.model('Event', eventSchema);

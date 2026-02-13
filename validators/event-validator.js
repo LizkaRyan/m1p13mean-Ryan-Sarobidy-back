@@ -8,7 +8,8 @@ const eventValidator = yup.object({
     "description": yup.string().required(),
     "createdAt": yup.date().required(),
     "themes": yup.array().of(yup.string()).required(),
-    "color": yup.string().required()
+    "color": yup.string().required(),
+    "deletedAt": yup.date("La date de suppression doit être une date").nullable()
 });
 
 const patchEventValidator = yup.object({
@@ -19,7 +20,8 @@ const patchEventValidator = yup.object({
     "description": yup.string(),
     "createdAt": yup.date(),
     "themes": yup.array().of(yup.string()),
-    "color": yup.string()
+    "color": yup.string(),
+    "deletedAt": yup.date("La date de suppression doit être une date").nullable()
 });
 
 module.exports = { eventValidator, patchEventValidator };

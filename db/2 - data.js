@@ -162,7 +162,8 @@ db.events.insertMany([
         "description": "Text",
         "createdAt": "2026-01-31",
         "themes": ["collection", "solde"],
-        "color": "#2E86C1"
+        "color": "#2E86C1",
+        "deletedAt": null
     },
     {
         "_id": ObjectId('698ef6c131fd509f68cb0ce3'),
@@ -173,7 +174,8 @@ db.events.insertMany([
         "description": "Text",
         "createdAt": "2026-01-31",
         "themes": ["music", "festival"],
-        "color": "#e11b22"
+        "color": "#e11b22",
+        "deletedAt": null
     }
 ]);
 
@@ -186,5 +188,6 @@ db.events.insertOne({
     "description": "Text",
     "createdAt": "2026-01-31",
     "themes": ["music", "festival"],
-    "color": "#e11b22"
+    "color": "#e11b22",
+    "deletedAt": null
 });
