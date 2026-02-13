@@ -10,8 +10,10 @@ const eventSchema = new mongoose.Schema({
     shopId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Shop",
-        required: true
+        required: false,
+        default: null
     },
+    color: String
 });
 
 module.exports = mongoose.model('Event', eventSchema);
