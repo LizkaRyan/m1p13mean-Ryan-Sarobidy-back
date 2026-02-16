@@ -14,6 +14,7 @@ var authRouter = require('./routes/auth-router');
 var roomRouter = require('./routes/room-router');
 var requestReservationRouter = require('./routes/requests-reservation-router');
 var eventRouter = require('./routes/event-router');
+var requestEventRouter = require('./routes/requests-event-router');
 var db = require('./config/db');
 
 var app = express();
@@ -35,6 +36,8 @@ app.use('/auth', authRouter);
 app.use('/rooms', roomRouter);
 app.use('/requests-reservation', requestReservationRouter);
 app.use('/events', eventRouter);
+app.use('/requests-event', requestEventRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

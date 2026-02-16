@@ -191,3 +191,37 @@ db.events.insertOne({
     "color": "#e11b22",
     "deletedAt": null
 });
+
+db.requestsEvent.insertOne({
+    "_id": ObjectId('6992d6b405a56d370acb0ce2'),
+    "title": "Black & White",
+    "shopId": ObjectId('698c5222a4c7623a67cb0ce3'),
+    "startDate": ISODate("2026-02-25"),
+    "endDate": ISODate("2026-03-03"),
+    "description": "Text",
+    "createdAt": "2026-01-31",
+    "themes": ["music", "festival"],
+    "color": "#e11b22",
+    "status": {
+        "code": "REQUEST",
+        "label": "En attente de validation",
+        "date": new Date()
+    }
+});
+
+db.requestsEvent.insertOne({
+    "_id": ObjectId('69932eb105a56d370acb0ce3'),
+    "title": "April Fest",
+    "shopId": ObjectId('698c5222a4c7623a67cb0ce3'),
+    "startDate": ISODate("2026-04-01T08:00"),
+    "endDate": ISODate("2026-04-01T12:00"),
+    "description": "Text",
+    "createdAt": "2026-01-31",
+    "themes": ["Festival","Freestyle", "Slam"],
+    "color": "#e11b22",
+    "status": {
+        "code": "REQUEST",
+        "label": "En attente de validation",
+        "date": new Date()
+    }
+});

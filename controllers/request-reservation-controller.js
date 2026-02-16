@@ -1,7 +1,8 @@
-const RequestReservation = require('../models/requests-reservation/RequestReservation');
+const RequestReservation = require('../models/reservation/RequestReservation');
 const { patchRequestReservationSchema } = require("../validators/request-reservation-validator");
 const { createReservation } = require('../services/ReservationService');
 const { updateRoomAvailability } = require('../services/RoomService');
+const mongoose = require("mongoose");
 
 const findAll = async (req, res) => {
   try {
@@ -29,7 +30,7 @@ const patch = async (req, res) => {
       return res.status(404).json({ message: "Demande de réservation non trouvée" });
     }
 
-    if(updateData.validated && updateData.validated === true) {
+    if (updateData.validated && updateData.validated === true) {
       await createReservation({
         shopId: updatedRequestReservation.shopId,
         room: updatedRequestReservation.roomId,
@@ -38,6 +39,7 @@ const patch = async (req, res) => {
       });
       await updateRoomAvailability(updatedRequestReservation.roomId._id, false);
     }
+
 
     res.status(200).json(await RequestReservation.find({ validated: null }).populate('shopId').populate('roomId'));
   } catch (err) {
