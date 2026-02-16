@@ -50,7 +50,6 @@ const put = async (req, res) => {
 }
 
 const patch = async (req, res) => {
-    const session = await mongoose.startSession();
     try {
 
         // Validation Yup
@@ -72,14 +71,9 @@ const patch = async (req, res) => {
             throw new Error("Impossible de supprimer une salle non disponible");
         }
 
-        await session.commitTransaction();
-
         res.status(200).json(await findAllNotDeleted());
     } catch (err) {
-        await session.abortTransaction();
         res.status(500).json({ message: "Erreur serveur", error: err.message });
-    } finally {
-        session.endSession();
     }
 }
 

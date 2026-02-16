@@ -47,8 +47,6 @@ const patch = async (req, res) => {
         res.status(200).json(await findByYear(new Date(updatedEvent.startDate).getFullYear()));
     } catch (err) {
         res.status(500).json({ message: "Erreur serveur", error: err.message });
-    } finally {
-        session.endSession();
     }
 }
 module.exports = { getAllEvents, save, patch };

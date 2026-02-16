@@ -1,4 +1,3 @@
-const Reservation = require('../models/reservation/Reservation');
 const Event = require('../models/event/Event');
 
 const findByYear = async (year) => {
@@ -18,4 +17,19 @@ const findByYear = async (year) => {
     }
 }
 
-module.exports = { findByYear };
+const createEventByRequest = async (requestEvent) => {
+    const eventData = {
+        title: requestEvent.title,
+        shopId: requestEvent.shopId,
+        startDate: requestEvent.startDate,
+        endDate: requestEvent.endDate,
+        description: requestEvent.description,
+        themes: requestEvent.themes,
+        createdAt: new Date(),
+        color: requestEvent.color,
+        deletedAt: null
+    };
+    return await Event.create(eventData);
+}
+
+module.exports = { findByYear, createEventByRequest };
