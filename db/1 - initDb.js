@@ -5,3 +5,4 @@ db.createCollection("rooms");
 db.createCollection("shops");
 db.createCollection("events");
 db.createCollection("requestsReservation");
+db.createCollection("requestsEvent");

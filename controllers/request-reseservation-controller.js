@@ -1,4 +1,4 @@
-const RequestReservation = require('../models/requests-reservation/RequestReservation');
+const RequestReservation = require('../models/reservation/RequestReservation');
 const { patchRequestReservationSchema } = require("../validators/request-reservation-validator");
 const { createReservation } = require('../services/ReservationService');
 const { updateRoomAvailability } = require('../services/RoomService');
