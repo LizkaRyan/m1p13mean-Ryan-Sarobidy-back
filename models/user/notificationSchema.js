@@ -5,9 +5,7 @@ const notificationSchema = new mongoose.Schema({
     code: String,
     label: String
   },
-  payload: {
-    eventId: String
-  },
+  payload: mongoose.Schema.Types.Mixed,
   message: String,
   createdAt: Date,
   read: Boolean
