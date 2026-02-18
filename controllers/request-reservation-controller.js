@@ -2,7 +2,7 @@ const RequestReservation = require('../models/reservation/RequestReservation');
 const { patchRequestReservationSchema } = require("../validators/request-reservation-validator");
 const { createReservation } = require('../services/ReservationService');
 const { updateRoomAvailability } = require('../services/RoomService');
-const mongoose = require("mongoose");
+const user = require('../models/user/User');
 
 const findAll = async (req, res) => {
   try {
@@ -24,7 +24,7 @@ const patch = async (req, res) => {
     const updatedRequestReservation = await RequestReservation.findByIdAndUpdate(
       id,
       updateData // renvoie le doc après update + validation Mongoose
-    ).populate('roomId');
+    ).populate('roomId').populate({ path: 'shopId', populate: { path: 'userId' } });
 
     if (!updatedRequestReservation) {
       return res.status(404).json({ message: "Demande de réservation non trouvée" });
@@ -38,8 +38,37 @@ const patch = async (req, res) => {
         endingDate: updatedRequestReservation.endingDate
       });
       await updateRoomAvailability(updatedRequestReservation.roomId._id, false);
+      const notification = {
+        type: {
+          code: "REQUEST_RESERVATION",
+          label: "Requête de Reservation"
+        },
+        payload: {
+          requestReservationId: updatedRequestReservation._id,
+        },
+        message: "Requête de réservation validée",
+        createdAt: new Date(),
+        read: false
+      };
+      updatedRequestReservation.shopId.userId.notifications.push(notification);
+      await updatedRequestReservation.shopId.userId.save();
     }
-
+    if(updateData.validated && updateData.validated === false) {
+      const notification = {
+        type: {
+          code: "REQUEST_RESERVATION",
+          label: "Requête de Reservation"
+        },
+        payload: {
+          requestReservationId: updatedRequestReservation._id,
+        },
+        message: "Requête de réservation refusée",
+        createdAt: new Date(),
+        read: false
+      };
+      updatedRequestReservation.shopId.userId.notifications.push(notification);
+      await updatedRequestReservation.shopId.userId.save();
+    }
 
     res.status(200).json(await RequestReservation.find({ validated: null }).populate('shopId').populate('roomId'));
   } catch (err) {
