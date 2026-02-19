@@ -225,3 +225,13 @@ db.requestsEvent.insertOne({
         "date": new Date()
     }
 });
+
+db.reservations.updateOne(
+  { 
+    _id: ObjectId("6995c497585a0ba2bc626a0b"),           // id de la réservation
+    "paymentHistory._id": ObjectId("6995c497585a0ba2bc626a0c")    // mois du paiement à mettre à jour
+  },
+  { 
+    $set: { "paymentHistory.$.status": "PAID", "paymentHistory.$.paidAt": new Date() } 
+  }
+)
