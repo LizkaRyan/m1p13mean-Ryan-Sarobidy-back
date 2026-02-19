@@ -8,8 +8,7 @@ const cors = require('cors');
 
 const authMiddleware = require('./middlewares/authMiddleware');
 
-
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users-router');
 var authRouter = require('./routes/auth-router');
 var roomRouter = require('./routes/room-router');
 var requestReservationRouter = require('./routes/requests-reservation-router');

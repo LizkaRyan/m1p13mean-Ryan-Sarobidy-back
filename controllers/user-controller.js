@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
 const User = require('../models/user/User');
+const { notificationValidator } = require('../validators/notification-validator');
 
-/* GET users listing. */
-router.patch('/:id', async function(req, res) {
+const patch = async function(req, res) {
   try {
     const { name, email, password, role } = req.body;
 
@@ -31,6 +29,27 @@ router.patch('/:id', async function(req, res) {
   } catch (err) {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
-});
+}
 
-module.exports = router;
+const postNotification = async function(req, res) {
+    try{
+        const { id } = req.params;
+        const  notification = req.body;
+        await notificationValidator.validate(notification);
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé' });
+        }
+        if (!notification) {
+            return res.status(400).json({ message: 'Notification manquante' });
+        }
+        user.notifications.push(notification);
+        await user.save();
+        res.status(200).json({ message: 'Notification ajoutée', user });
+    }
+    catch(err){
+        res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    }
+}
+
+module.exports = { patch, postNotification };
