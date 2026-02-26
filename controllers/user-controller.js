@@ -83,4 +83,55 @@ const getNotifications = async function (req, res) {
   }
 }
 
-module.exports = { patch, postNotification, getNotifications };
+const makeItAllRead = async function (req, res) {
+  try {
+    const { id } = req.params;
+
+    const result = await User.updateOne(
+      { _id: id },
+      { $set: { "notifications.$[elem].read": true } },
+      { arrayFilters: [{ "elem.read": false }] }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    res.status(200).json({
+      message: 'Toutes les notifications non lues marquées comme lues'
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+const countUnread = async function (req, res) {
+  try {
+    const { id } = req.params;
+
+    const result = await User.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
+      {
+        $project: {
+          unreadCount: {
+            $size: {
+              $filter: {
+                input: '$notifications',
+                cond: { $eq: ['$$this.read', false] }
+              }
+            }
+          }
+        }
+      }
+    ]);
+
+    if (result.length === 0) return res.status(404).json({ message: 'Utilisateur non trouvé' });
+
+    res.status(200).json( result[0].unreadCount );
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+module.exports = { patch, postNotification, getNotifications, makeItAllRead, countUnread };
