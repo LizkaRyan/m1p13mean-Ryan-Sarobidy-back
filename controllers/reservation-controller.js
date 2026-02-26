@@ -57,9 +57,4 @@ const pay = async (req, res) => {
     }
 }
 
-const formatOnlyMonth = (date) => {
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // ajoute 0 si < 10
-    return `${date.getFullYear()}-${month}`;
-}
-
 module.exports = { getStatisticPaidAndUnpaid, getShopUnpaid, pay };
