@@ -217,7 +217,7 @@ db.requestsEvent.insertOne({
     "endDate": ISODate("2026-04-01T12:00"),
     "description": "Text",
     "createdAt": "2026-01-31",
-    "themes": ["Festival","Freestyle", "Slam"],
+    "themes": ["Festival", "Freestyle", "Slam"],
     "color": "#e11b22",
     "status": {
         "code": "REQUEST",
@@ -227,11 +227,24 @@ db.requestsEvent.insertOne({
 });
 
 db.reservations.updateOne(
-  { 
-    _id: ObjectId("6995c497585a0ba2bc626a0b"),           // id de la réservation
-    "paymentHistory._id": ObjectId("6995c497585a0ba2bc626a0c")    // mois du paiement à mettre à jour
-  },
-  { 
-    $set: { "paymentHistory.$.status": "PAID", "paymentHistory.$.paidAt": new Date() } 
-  }
+    {
+        _id: ObjectId("6995c497585a0ba2bc626a0b"),           // id de la réservation
+        "paymentHistory._id": ObjectId("6995c497585a0ba2bc626a0c")    // mois du paiement à mettre à jour
+    },
+    {
+        $set: { "paymentHistory.$.status": "PAID", "paymentHistory.$.paidAt": new Date() }
+    }
 )
+
+db.users.insertOne({
+    "_id": ObjectId('699b39e0770125b555cb0ce2'),
+    "email": "Lizka@gmail.com",
+    "password": "$2b$10$Vx64tQpGCEcFgIkwGdvwy.Ebiy06ds/aGVmiixvCX54lGNw.YJE86",
+    "name": "Lizka",
+    "role": {
+        "code": "CUSTOMER",
+        "label": "CUSTOMER"
+    },
+    "favorites": [],
+    "notifications": []
+});
