@@ -1,7 +1,8 @@
 const User = require('../models/user/User');
 const { notificationValidator } = require('../validators/notification-validator');
+const mongoose = require('mongoose');
 
-const patch = async function(req, res) {
+const patch = async function (req, res) {
   try {
     const { name, email, password, role } = req.body;
 
@@ -31,25 +32,55 @@ const patch = async function(req, res) {
   }
 }
 
-const postNotification = async function(req, res) {
-    try{
-        const { id } = req.params;
-        const  notification = req.body;
-        await notificationValidator.validate(notification);
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ message: 'Utilisateur non trouvé' });
-        }
-        if (!notification) {
-            return res.status(400).json({ message: 'Notification manquante' });
-        }
-        user.notifications.push(notification);
-        await user.save();
-        res.status(200).json({ message: 'Notification ajoutée', user });
+const postNotification = async function (req, res) {
+  try {
+    const { id } = req.params;
+    const notification = req.body;
+    await notificationValidator.validate(notification);
+    notification.createdAt = new Date();
+    notification.read = false;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
-    catch(err){
-        res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    if (!notification) {
+      return res.status(400).json({ message: 'Notification manquante' });
     }
+    user.notifications.push(notification);
+    await user.save();
+    res.status(200).json({ message: 'Notification ajoutée', user });
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
 }
 
-module.exports = { patch, postNotification };
+const getNotifications = async function (req, res) {
+  try {
+    const { id } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const skip = (page - 1) * limit;
+
+    const notifications = await User.aggregate([
+      {
+        $match: { _id: new mongoose.Types.ObjectId(id) }
+      },
+      { $unwind: "$notifications" },
+      { $sort: { "notifications.createdAt": -1 } }, // récent → ancien
+      { $skip: skip },
+      { $limit: limit },
+      {
+        $replaceRoot: { newRoot: "$notifications" }
+      }
+    ]);
+
+    res.status(200).json(notifications);
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+}
+
+module.exports = { patch, postNotification, getNotifications };
