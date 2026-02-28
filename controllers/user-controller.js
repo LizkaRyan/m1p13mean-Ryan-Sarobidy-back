@@ -1,6 +1,7 @@
 const User = require('../models/user/User');
 const { notificationValidator } = require('../validators/notification-validator');
 const mongoose = require('mongoose');
+const { createNotification } = require('../services/NotificationService');
 
 const patch = async function (req, res) {
   try {
@@ -39,15 +40,7 @@ const postNotification = async function (req, res) {
     await notificationValidator.validate(notification);
     notification.createdAt = new Date();
     notification.read = false;
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: 'Utilisateur non trouvé' });
-    }
-    if (!notification) {
-      return res.status(400).json({ message: 'Notification manquante' });
-    }
-    user.notifications.push(notification);
-    await user.save();
+    let user = createNotification(id, notification);
     res.status(200).json({ message: 'Notification ajoutée', user });
   }
   catch (err) {

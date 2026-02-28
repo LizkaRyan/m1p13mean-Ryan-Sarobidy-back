@@ -45,6 +45,18 @@ const patch = async (req, res) => {
 
         if (updateData.status && updateData.status.code === "APPROVED") {
             await createEventByRequest(updatedRequestEvent);
+            const notification = {
+                type: {
+                    code: "NEW_EVENT",
+                    label: "Requête d'Événement"
+                },
+                payload: {
+                    requestEventId: updatedRequestEvent._id,
+                },
+                message: "Nouvelle événement créé: " + updatedRequestEvent.title,
+                createdAt: new Date(),
+                read: false
+            }
         }
 
         const requests = await getAllRequestsEvent("REQUEST", updatedRequestEvent.startDate.getFullYear());
