@@ -138,6 +138,42 @@ db.shops.insertMany([
             "code": "MODE",
             "label": "Mode"
         },
+        "status": {
+            "code": "AVAILABLE",
+            "label": "Disponible"
+        },
+        "roomHistory": [
+            {
+                "roomId": "room123",
+                "from": "2025-06-01",
+                "to": "2025-12-31"
+            },
+            {
+                "roomId": "room789",
+                "from": "2026-01-01",
+                "to": null
+            }
+        ],
+        "photos": [
+            {
+                "_id": "photo1",
+                "url": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=300&fit=crop",
+                "createdAt": "2026-01-10",
+                "type": {
+                    "code": "EXTERIOR",
+                    "label": "Exterior"
+                }
+            },
+            {
+                "_id": "photo2",
+                "url": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=300&fit=crop",
+                "createdAt": "2026-01-12",
+                "type": {
+                    "code": "INTERIOR",
+                    "label": "Interior"
+                }
+            }
+        ]
     }
 ]);
 

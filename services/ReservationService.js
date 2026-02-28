@@ -5,7 +5,8 @@ const createReservation = async ({ shopId, room, beginingDate, endingDate }) => 
     shopId: shopId,
     roomId: room._id,
     createdAt: new Date(),
-    paymentHistory: generateMonthlyPayments(beginingDate, endingDate, room.rentPrice)
+    paymentHistory: generateMonthlyPayments(beginingDate, endingDate, room.rentPrice),
+    dateMax: endingDate,
   };
   try {
     await Reservation.create(newReservation);
