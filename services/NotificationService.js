@@ -15,4 +15,17 @@ const createNotification = async (userId, notification) => {
     }
 }
 
-module.exports = { createNotification };
+const createNotificationForAll = async (notification) => {
+    try {
+        const result = await User.updateMany(
+            {},
+            { $push: { notifications: notification } }
+        );
+
+        return result;
+    } catch (err) {
+        throw new Error('Erreur lors de la création des notifications : ' + err.message);
+    }
+};
+
+module.exports = { createNotification, createNotificationForAll };
