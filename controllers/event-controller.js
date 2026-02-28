@@ -18,8 +18,8 @@ const getAllEvents = async (req, res) => {
 const save = async (req, res) => {
     try {
         await eventValidator.validate(req.body);
-        const event = req.body;
-        await Event.create(event);
+        let event = req.body;
+        event = await Event.create(event);
         const notification = {
             type: {
                 code: "NEW_EVENT",
@@ -64,4 +64,14 @@ const patch = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur", error: err.message });
     }
 }
-module.exports = { getAllEvents, save, patch };
+
+const getEventById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const event = await Event.findById(id).populate('shopId', 'name');
+        res.json(event);
+    } catch (err) {
+        res.status(500).json({ message: "Erreur serveur", error: err.message });
+    }
+}
+module.exports = { getAllEvents, save, patch, getEventById };
