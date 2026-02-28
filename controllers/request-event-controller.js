@@ -2,7 +2,8 @@ const { getAllRequestsEvent } = require('../services/RequestsEventService');
 const { findByYear, createEventByRequest } = require('../services/EventService');
 const { patchRequestEventValidator } = require('../validators/request-event-validator');
 const RequestsEvent = require('../models/event/RequestsEvent');
-const mongoose = require("mongoose");
+const { createNotificationForAll } = require('../services/NotificationService');
+const { formatDate } = require('../services/StringService');
 
 const findWithEvent = async (req, res) => {
     try {
@@ -44,7 +45,20 @@ const patch = async (req, res) => {
         }
 
         if (updateData.status && updateData.status.code === "APPROVED") {
-            await createEventByRequest(updatedRequestEvent);
+            let event = await createEventByRequest(updatedRequestEvent);
+            const notification = {
+                type: {
+                    code: "NEW_EVENT",
+                    label: "Nouvelle évènement"
+                },
+                payload: {
+                    eventId: event._id,
+                },
+                message: "Nouvelle événement créé: " + event.title + " le " + formatDate(event.startDate),
+                createdAt: new Date(),
+                read: false
+            }
+            await createNotificationForAll(notification);
         }
 
         const requests = await getAllRequestsEvent("REQUEST", updatedRequestEvent.startDate.getFullYear());

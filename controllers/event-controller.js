@@ -1,6 +1,8 @@
 const Event = require('../models/event/Event');
 const { eventValidator, patchEventValidator } = require('../validators/event-validator');
 const { findByYear } = require('../services/EventService');
+const { formatDate } = require('../services/StringService');
+const { createNotificationForAll } = require('../services/NotificationService');
 
 const getAllEvents = async (req, res) => {
     try {
@@ -18,6 +20,19 @@ const save = async (req, res) => {
         await eventValidator.validate(req.body);
         const event = req.body;
         await Event.create(event);
+        const notification = {
+            type: {
+                code: "NEW_EVENT",
+                label: "Nouvelle évènement"
+            },
+            payload: {
+                eventId: event._id,
+            },
+            message: "Nouvelle événement créé: " + event.title + " le " + formatDate(event.startDate),
+            createdAt: new Date(),
+            read: false
+        }
+        await createNotificationForAll(notification);
         res.status(201).json(await findByYear(new Date(event.startDate).getFullYear()));
     } catch (err) {
         return res.status(400).json({
