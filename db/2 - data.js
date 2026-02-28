@@ -143,7 +143,6 @@ db.shops.insertMany([
 
 db.requestsReservation.insertMany([
     {
-        "_id": ObjectId('698c53fba4c7623a67cb0ce4'),
         "shopId": ObjectId("698c5222a4c7623a67cb0ce3"),
         "roomId": ObjectId('698c9820d0bdcba2131f0ca0'),
         "beginingDate": ISODate("2026-02-15T00:00:00"),
@@ -210,7 +209,6 @@ db.requestsEvent.insertOne({
 });
 
 db.requestsEvent.insertOne({
-    "_id": ObjectId('69932eb105a56d370acb0ce3'),
     "title": "April Fest",
     "shopId": ObjectId('698c5222a4c7623a67cb0ce3'),
     "startDate": ISODate("2026-04-01T08:00"),
