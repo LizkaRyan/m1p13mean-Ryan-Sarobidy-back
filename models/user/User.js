@@ -5,7 +5,11 @@ const favoriteSchema = require('./favoriteSchema');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  email: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
   password: String,
   name: String,
   role: roleSchema,

@@ -38,7 +38,16 @@ const post = async function (req, res) {
     res.json({ token, user: { _id: user._id, role: user.role.code } });
   }
   catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    if (err.code === 11000) {
+      return res.status(409).json({
+        message: "Email déjà utilisé"
+      });
+    }
+
+    res.status(500).json({
+      message: "Erreur serveur",
+      error: err.message
+    });
   }
 }
 
