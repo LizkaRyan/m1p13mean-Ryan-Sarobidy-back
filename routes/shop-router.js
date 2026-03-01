@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getAllShops, getShop, save, put, patch } = require('../controllers/shop-controller');
+const shopController = require('../controllers/shop-controller');
 
-router.get('/available', ShopController.getAllDisponibles);
-router.get('/:id', ShopController.getById);
-router.get('/user/:userId', ShopController.getByUserId); 
+router.get('/available', shopController.getAllDisponibles);
+router.get('/:id', shopController.getById);
+router.get('/user/:userId', shopController.getByUserId); 
 
 module.exports = router;

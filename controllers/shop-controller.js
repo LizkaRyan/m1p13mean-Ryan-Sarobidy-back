@@ -1,25 +1,38 @@
 const Shop = require('../models/shop/Shop');
-const { shopSchema, patchShopSchema } = require('../validators/shop-validator');
-const { findAll, findById } = require('../services/ShopService');
+const Reservation = require('../models/reservation/Reservation');
 
-const getAllShops = async (req, res) => {
-  try {
-    const shops = await findAll();
-    res.json(shops);
-  } catch (err) {
-    res.status(500).json({ message: "Erreur serveur", error: err.message });
-  }
+const getById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const shop = await Shop.findById(id).select('-roomHistory -status');
+        const rooms = await Reservation.find({ shopId: id }).select('roomId').populate({
+            path: "roomId",
+            select: "name"
+        });
+        res.json({ ...shop._doc, rooms: rooms.map(r => r.roomId.name) });
+    }
+    catch (err) {
+        res.status(500).json({ message: "Erreur serveur", error: err.message });
+    }
 };
 
-const getShop = async (req, res) => {
-  try {
-    const shop = await findById(req.params.id);
-    if (!shop) return res.status(404).json({ message: "Boutique non trouvée" });
-    res.json(shop);
-  } catch (err) {
-    res.status(500).json({ message: "Erreur serveur", error: err.message });
-  }
-};
+const getAllDisponibles = async (req, res) => {
+    try {
+        const reservation = await Reservation.find({
+            dateMax: { $gte: new Date() }
+        }).select("shopId roomId").populate({
+            path: "shopId",
+            select: "-status -roomHistory -photos"
+        }).populate({
+            path: "roomId",
+            select: "name"
+        });
+        res.json(reservation);
+    }
+    catch (err) {
+        res.status(500).json({ message: "Erreur serveur", error: err.message });
+    }
+}
 
 const getByUserId = async (req, res) => {
     try {
@@ -50,4 +63,4 @@ const getByUserId = async (req, res) => {
     }
 };
 
-module.exports = { getAllShops, getShop, getAllDisponibles, getByUserId };
+module.exports = { getById, getAllDisponibles, getByUserId };
