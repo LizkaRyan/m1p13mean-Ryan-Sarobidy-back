@@ -6,5 +6,6 @@ router.get('', roomController.getAll);
 router.post('', roomController.save);
 router.put('/:id', roomController.put);
 router.patch('/:id', roomController.patch);
+router.get('/available', roomController.getAvailable);
 
 module.exports = router;
