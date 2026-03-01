@@ -15,6 +15,7 @@ var roomRouter = require('./routes/room-router');
 var requestReservationRouter = require('./routes/requests-reservation-router');
 var eventRouter = require('./routes/event-router');
 var requestEventRouter = require('./routes/requests-event-router');
+var shopsRouter = require('./routes/shop-router');
 var db = require('./config/db');
 
 var app = express();
@@ -29,14 +30,16 @@ app.use(cors({
   origin: process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }));
+app.use('/auth', authRouter);
 app.use(authMiddleware);
 
 app.use('/users', usersRouter);
-app.use('/auth', authRouter);
+
 app.use('/rooms', roomRouter);
 app.use('/requests-reservation', requestReservationRouter);
 app.use('/events', eventRouter);
 app.use('/requests-event', requestEventRouter);
+app.use('/api/shops', shopsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
