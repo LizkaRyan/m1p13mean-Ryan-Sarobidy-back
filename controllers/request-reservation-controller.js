@@ -14,6 +14,31 @@ const findAll = async (req, res) => {
   }
 };
 
+const create = async (req, res) => {
+  try {
+    const { shopId, roomId, beginingDate, endingDate } = req.body;
+
+    if (!shopId || !roomId || !beginingDate || !endingDate) {
+      return res.status(400).json({ message: 'Champs requis manquants : shopId, roomId, beginingDate, endingDate' });
+    }
+
+    const newRequest = new RequestReservation({
+      shopId: new mongoose.Types.ObjectId(shopId),
+      roomId: new mongoose.Types.ObjectId(roomId),
+      beginingDate: new Date(beginingDate),
+      endingDate: new Date(endingDate),
+      validated: null
+    });
+
+    const saved = await newRequest.save();
+    const populated = await saved.populate(['shopId', 'roomId']);
+
+    res.status(201).json(populated);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
 const patch = async (req, res) => {
   try {
     // Validation Yup
@@ -47,4 +72,4 @@ const patch = async (req, res) => {
   }
 }
 
-module.exports = { findAll, patch };
+module.exports = { findAll, patch, create };
