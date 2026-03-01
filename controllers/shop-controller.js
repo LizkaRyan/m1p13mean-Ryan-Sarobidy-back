@@ -50,4 +50,4 @@ const getByUserId = async (req, res) => {
     }
 };
 
-module.exports = { getById, getAllDisponibles, getByUserId };
+module.exports = { getAllShops, getShop, getAllDisponibles, getByUserId };
