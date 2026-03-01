@@ -28,4 +28,16 @@ const updateRoomAvailability = async (id, isAvailable) => {
     }
 }
 
-module.exports = { findAllNotDeleted, updateRoomAvailability };
+const findAvailableRooms = async () => {
+    try {
+        const rooms = await Room.find({ 
+            deletedAt: null,
+            'status.code': 'AVAILABLE'
+        });
+        return rooms;
+    } catch (err) {
+        throw new Error('Erreur lors de la récupération des chambres disponibles : ' + err.message);
+    }
+}
+
+module.exports = { findAllNotDeleted, updateRoomAvailability, findAvailableRooms };
