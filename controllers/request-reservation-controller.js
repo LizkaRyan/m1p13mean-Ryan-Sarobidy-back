@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const RequestReservation = require('../models/reservation/RequestReservation');
 const { patchRequestReservationSchema } = require("../validators/request-reservation-validator");
 const { createReservation } = require('../services/ReservationService');
