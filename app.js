@@ -39,7 +39,7 @@ app.use('/rooms', roomRouter);
 app.use('/requests-reservation', requestReservationRouter);
 app.use('/events', eventRouter);
 app.use('/requests-event', requestEventRouter);
-app.use('/api/shops', shopsRouter);
+app.use('/shops', shopsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
