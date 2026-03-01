@@ -2,7 +2,7 @@
 module.exports = function (req, res, next) {
     const publicRoutes = [
         '/auth/login',
-        '/auth/register'
+        '/auth/signup'
     ];
 
     if (publicRoutes.includes(req.path)) {
