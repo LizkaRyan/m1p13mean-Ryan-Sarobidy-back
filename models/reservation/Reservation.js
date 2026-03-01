@@ -3,6 +3,7 @@ const paymentHistorySchema = require('./paymentHistorySchema');
 
 const reservationSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
+    dateMax: { type: Date, required: true },
     paymentHistory: [paymentHistorySchema],
     shopId: {
         type: mongoose.Schema.Types.ObjectId,
