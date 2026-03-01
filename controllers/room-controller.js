@@ -1,6 +1,6 @@
 const Room = require('../models/room/Room');
 const { roomSchema, patchRoomSchema } = require("../validators/room-validator");
-const { findAllNotDeleted } = require('../services/RoomService');
+const { findAllNotDeleted, findAvailableRooms } = require('../services/RoomService');
 const mongoose = require("mongoose");
 
 const save = async (req, res) => {
@@ -24,6 +24,16 @@ const getAll = async (req, res) => {
         return res.status(500).json({ message: "Erreur serveur", error: err.message });
     }
 }
+
+const getAvailable = async (req, res) => {
+    try {
+        const rooms = await findAvailableRooms();
+        return res.status(200).json(rooms);
+    } catch (err) {
+        console.error('Error fetching available rooms:', err);
+        return res.status(500).json({ message: "Erreur serveur", error: err.message });
+    }
+};
 
 const put = async (req, res) => {
     try {
@@ -77,4 +87,4 @@ const patch = async (req, res) => {
     }
 }
 
-module.exports = { save, getAll, put, patch };
+module.exports = { save, getAll, put, patch, getAvailable };
