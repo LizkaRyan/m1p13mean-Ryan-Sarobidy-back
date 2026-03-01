@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Shop = require('../models/shop/Shop');
 const Reservation = require('../models/reservation/Reservation');
 
@@ -63,4 +64,65 @@ const getByUserId = async (req, res) => {
     }
 };
 
-module.exports = { getById, getAllDisponibles, getByUserId };
+const create = async (req, res) => {
+  try {
+    const { name, category, userId } = req.body;
+
+    if (!name || !category?.code || !category?.label || !userId) {
+      return res.status(400).json({ message: 'Champs requis manquants : name, category.code, category.label, userId' });
+    }
+
+    const newShop = new Shop({
+      name,
+      category: {
+        code: category.code,
+        label: category.label
+      },
+      userId: new mongoose.Types.ObjectId(userId)
+    });
+
+    const saved = await newShop.save();
+    res.status(201).json(saved);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+const updateById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, category } = req.body;
+
+    const updated = await Shop.findByIdAndUpdate(
+      id,
+      { name, category },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Boutique non trouvée' });
+    }
+
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+const deleteById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await Shop.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'Boutique non trouvée' });
+    }
+
+    res.status(200).json({ message: 'Boutique supprimée avec succès' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+module.exports = { getById, getAllDisponibles, getByUserId, create, updateById, deleteById };
