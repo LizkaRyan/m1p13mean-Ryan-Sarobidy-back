@@ -19,6 +19,16 @@ const findById = async (id) => {
   }
 };
 
+const findByUserId = async (userId) => {
+  try {
+    const shop = await Shop.findOne({ userId }).populate('userId', 'name email');
+    if (!shop) throw new Error('Boutique non trouvée pour cet utilisateur');
+    return shop;
+  } catch (err) {
+    throw new Error('Erreur lors de la récupération de la boutique : ' + err.message);
+  }
+};
+
 const updateCategory = async (id, category) => {
   try {
     const updatedShop = await Shop.findByIdAndUpdate(
@@ -33,4 +43,4 @@ const updateCategory = async (id, category) => {
   }
 };
 
-module.exports = { findAll, findById, updateCategory };
+module.exports = { findAll, findById, updateCategory, findByUserId };

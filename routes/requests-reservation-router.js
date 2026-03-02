@@ -4,6 +4,6 @@ const requestReservationController = require('../controllers/request-reservation
 
 router.get('', requestReservationController.findAll);
 router.patch('/:id', requestReservationController.patch);
-
+router.post('/create', requestReservationController.create);
 
 module.exports = router;
