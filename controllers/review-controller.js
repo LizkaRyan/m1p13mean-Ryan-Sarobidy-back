@@ -15,11 +15,18 @@ const findByShopId = async (req, res) => {
 };
 
 const postReview = async (req, res) => {
-    try{
-        await reviewValidator.validate(req.body);
-        const review = new Review(req.body);
-        await review.save();
-        res.status(201).json(review);
+    try {
+        const { id } = req.params;
+        const data = { ...req.body, shopId: id };
+        await reviewValidator.validate(data);
+        const review = new Review(data);
+        review.createdAt = new Date();
+        const savedReview = await review.save();
+        await savedReview.populate({
+            path: "userId",
+            select: "name email"
+        });
+        res.status(201).json(savedReview);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
