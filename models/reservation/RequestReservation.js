@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const { Shop } = require("../shop/Shop");
-const { Room } = require("../room/Room");
-
 
 const requestsReservationSchema = new mongoose.Schema({
     shopId: {
