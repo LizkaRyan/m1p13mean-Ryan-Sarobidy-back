@@ -5,6 +5,10 @@ module.exports = function (req, res, next) {
         '/auth/signup'
     ];
 
+    if (req.path.startsWith('/uploads/')) {
+        return next();
+    }
+
     if (publicRoutes.includes(req.path)) {
         return next(); // 🔓 pas de middleware
     }
