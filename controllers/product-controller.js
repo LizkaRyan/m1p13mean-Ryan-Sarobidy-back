@@ -33,17 +33,55 @@ const getProductById = async (req, res) => {
     }
 };
 
+// const save = async (req, res) => {
+//     try {
+//         await productSchema.validate(req.body, { abortEarly: false });
+//         const product = await Product.create(req.body);
+//         res.status(201).json(product);
+//     } catch (err) {
+//         res.status(400).json({
+//             message: 'Validation échouée',
+//             errors: err.errors
+//         });
+//     }
+// };
+
+// product.controller.js — modifier save()
 const save = async (req, res) => {
-    try {
-        await productSchema.validate(req.body, { abortEarly: false });
-        const product = await Product.create(req.body);
-        res.status(201).json(product);
-    } catch (err) {
-        res.status(400).json({
-            message: 'Validation échouée',
-            errors: err.errors
-        });
+  try {
+    // ✅ Parser D'ABORD avant de valider
+    const body = {
+      ...req.body,
+      category: JSON.parse(req.body.category),
+      status: JSON.parse(req.body.status),
+    };
+
+    await productSchema.validate(body, { abortEarly: false });
+
+    const photos = [];
+
+    if (req.files?.['mainPhoto']?.[0]) {
+      photos.push({
+        url: `/uploads/${req.files['mainPhoto'][0].filename}`,
+        createdAt: new Date().toISOString(),
+        type: { code: 'MAIN', label: 'Main' }
+      });
     }
+
+    (req.files?.['detailPhotos'] ?? []).forEach(file => {
+      photos.push({
+        url: `/uploads/${file.filename}`,
+        createdAt: new Date().toISOString(),
+        type: { code: 'DETAIL', label: 'Detail' }
+      });
+    });
+
+    const product = await Product.create({ ...body, photos });
+
+    res.status(201).json(product);
+  } catch (err) {
+    res.status(400).json({ message: 'Validation échouée', errors: err.errors });
+  }
 };
 
 const patch = async (req, res) => {
