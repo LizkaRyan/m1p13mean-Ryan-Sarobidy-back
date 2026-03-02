@@ -43,6 +43,7 @@ app.use('/requests-event', requestEventRouter);
 app.use('/reservations', reservationRouter);
 app.use('/shops', shopRouter);
 app.use('/products', productRouter);
+app.use('/uploads', express.static('uploads'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
