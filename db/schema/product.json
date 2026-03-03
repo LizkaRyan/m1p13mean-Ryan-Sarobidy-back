@@ -1,13 +1,12 @@
 [
     {
-        "_id": "prod001",
         "name": "Chaussures de sport",
         "unityPrice": 79.99,
         "category": {
             "code": "SHOES",
             "label": "Chaussures"
         },
-        "shopId": "boutique456",
+        "shopId": "698c5222a4c7623a67cb0ce3",
         "description": "Chaussures de sport confortables et stylées.",
         "status": {
             "code": "AVAILABLE",
@@ -16,7 +15,7 @@
         "photos": [
             {
                 "_id": "photo101",
-                "url": "https://cdn.site.com/products/shoes-1.jpg",
+                "url": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=300&fit=crop",
                 "createdAt": "2026-01-15",
                 "type": {
                     "code": "MAIN",
@@ -25,7 +24,7 @@
             },
             {
                 "_id": "photo102",
-                "url": "https://cdn.site.com/products/shoes-2.jpg",
+                "url": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=300&fit=crop",
                 "createdAt": "2026-01-16",
                 "type": {
                     "code": "DETAIL",

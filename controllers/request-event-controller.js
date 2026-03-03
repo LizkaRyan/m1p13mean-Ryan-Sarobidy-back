@@ -7,8 +7,8 @@ const { formatDate } = require('../services/StringService');
 
 const findWithEvent = async (req, res) => {
     try {
-        const { status, year } = req.query;
-        const requests = await getAllRequestsEvent(status, year);
+        const { status, year, shopId } = req.query;
+        const requests = await getAllRequestsEvent(status, year, shopId);
         const events = await findByYear(year);
 
         res.json({ requests, events });
@@ -19,8 +19,8 @@ const findWithEvent = async (req, res) => {
 
 const findAll = async (req, res) => {
     try {
-        const { status, year } = req.query;
-        const requests = await getAllRequestsEvent(status, year);
+        const { status, year, shopId } = req.query;
+        const requests = await getAllRequestsEvent(status, year, shopId);
         res.json(requests);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -61,7 +61,7 @@ const patch = async (req, res) => {
             await createNotificationForAll(notification);
         }
 
-        const requests = await getAllRequestsEvent("REQUEST", updatedRequestEvent.startDate.getFullYear());
+        const requests = await getAllRequestsEvent("REQUEST", updatedRequestEvent.startDate.getFullYear(), updatedRequestEvent.shopId);
         const events = await findByYear(updatedRequestEvent.startDate.getFullYear());
         res.status(200).json({ requests, events });
     } catch (err) {
@@ -69,4 +69,23 @@ const patch = async (req, res) => {
     }
 }
 
-module.exports = { findWithEvent, findAll, patch };
+const postRequestEvent = async (req, res) => {
+    try {
+        const request = new RequestsEvent(req.body);
+        request.status = {
+            code: "REQUEST",
+            label: "En attente de validation",
+            date: new Date()
+        };
+        request.deletedAt = null;
+        await request.save();
+        
+        const requests = await getAllRequestsEvent("REQUEST", request.startDate.getFullYear(), request.shopId);
+        const events = await findByYear(request.startDate.getFullYear());
+        res.status(201).json({ requests, events });
+    } catch (err) {
+        res.status(500).json({ message: "Erreur serveur", error: err.message });
+    }
+}
+
+module.exports = { findWithEvent, findAll, patch, postRequestEvent };

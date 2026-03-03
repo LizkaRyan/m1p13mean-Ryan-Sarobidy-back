@@ -1,11 +1,16 @@
 const RequestsEvent = require('../models/event/RequestsEvent');
 
-const getAllRequestsEvent = async (status, year) => {
+const getAllRequestsEvent = async (status, year, shopId) => {
     try {
         const filter = {};
+        filter.deletedAt = null;
 
         if (status) {
             filter["status.code"] = status;
+        }
+
+        if (shopId) {
+            filter["shopId"] = shopId;
         }
 
         if (year) {

@@ -14,7 +14,11 @@ const requestsEventSchema = new mongoose.Schema({
         default: null
     },
     color: String,
-    status: statusRequestEventSchema
+    status: statusRequestEventSchema,
+    deletedAt: {
+        type: Date,
+        default: null
+    }
 });
 
 module.exports = mongoose.model('RequestsEvent', requestsEventSchema, 'requestsEvent');
