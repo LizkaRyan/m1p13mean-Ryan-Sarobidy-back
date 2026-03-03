@@ -8,54 +8,8 @@ db.users.insertMany([
             "code": "CUSTOMER",
             "label": "Customer"
         },
-        "favorites": [
-            {
-                "shopId": "boutique456",
-                "addedAt": "2026-01-30"
-            }
-        ],
-        "notifications": [
-            {
-                "type": {
-                    "code": "NEW_EVENT",
-                    "label": "New event"
-                },
-                "payload": {
-                    "eventId": "event123"
-                },
-                "message": "Nouvel événement au centre commercial",
-                "createdAt": "2026-01-31",
-                "read": false
-            },
-            {
-                "type": {
-                    "code": "NEW_PRODUCT",
-                    "label": "New product"
-                },
-                "payload": {
-                    "shopId": "boutique456",
-                    "productId": "product789"
-                },
-                "message": "Nouveau produit chez votre boutique favori",
-                "createdAt": "2026-01-31",
-                "read": false
-            },
-            {
-                "type": {
-                    "code": "NEW_RESERVATION",
-                    "label": "New reservation"
-                },
-                "payload": {
-                    "reservationId": "res123",
-                    "boutiqueId": "boutique456",
-                    "roomId": "room12",
-                    "userId": "user999"
-                },
-                "message": "Nouvelle réservation de salle",
-                "createdAt": "2026-01-31",
-                "read": false
-            }
-        ]
+        "favorites": [],
+        "notifications": []
     },
     {
         "_id": ObjectId('6983520fc0ddee2551cb0ce3'),
@@ -69,50 +23,50 @@ db.users.insertMany([
         "favorites": [],
         "notifications": []
     }
-])
+]);
 
 db.rooms.insertMany([
     {
-        _id: ObjectId('698c97f6d0bdcba2131f0c99'),
-        name: 'Box 1',
-        rentPrice: 135000,
-        status: {
-            code: 'AVAILABLE',
-            label: 'Disponible',
-            _id: ObjectId('698c97f6d0bdcba2131f0c96')
+        "_id": ObjectId('698c97f6d0bdcba2131f0c99'),
+        "name": 'Box 1',
+        "rentPrice": 135000,
+        "status": {
+            "code": 'AVAILABLE',
+            "label": 'Disponible',
+            "_id": ObjectId('698c97f6d0bdcba2131f0c96')
         },
-        floor: 1,
-        capacity: 25,
-        dimensions: {
-            length: 10,
-            height: 3,
-            width: 5,
-            area: 50,
-            _id: ObjectId('698c97f6d0bdcba2131f0c97')
+        "floor": 1,
+        "capacity": 25,
+        "dimensions": {
+            "length": 10,
+            "height": 3,
+            "width": 5,
+            "area": 50,
+            "_id": ObjectId('698c97f6d0bdcba2131f0c97')
         },
-        deletedAt: null,
-        __v: 0
+        "deletedAt": null,
+        "__v": 0
     },
     {
-        _id: ObjectId('698c9820d0bdcba2131f0ca0'),
-        name: 'Box 2',
-        rentPrice: 250000,
-        status: {
-            code: 'AVAILABLE',
-            label: 'Disponible',
-            _id: ObjectId('698c9ff92e3ae09562191633')
+        "_id": ObjectId('698c9820d0bdcba2131f0ca0'),
+        "name": 'Box 2',
+        "rentPrice": 250000,
+        "status": {
+            "code": 'AVAILABLE',
+            "label": 'Disponible',
+            "_id": ObjectId('698c9ff92e3ae09562191633')
         },
-        floor: 1,
-        capacity: 40,
-        dimensions: {
-            length: 15,
-            height: 3,
-            width: 10,
-            area: 150,
-            _id: ObjectId('698c9820d0bdcba2131f0c9e')
+        "floor": 1,
+        "capacity": 40,
+        "dimensions": {
+            "length": 15,
+            "height": 3,
+            "width": 10,
+            "area": 150,
+            "_id": ObjectId('698c9820d0bdcba2131f0c9e')
         },
-        deletedAt: null,
-        __v: 0
+        "deletedAt": null,
+        "__v": 0
     }
 ]);
 
@@ -281,4 +235,40 @@ db.users.insertOne({
     },
     "favorites": [],
     "notifications": []
+});
+
+db.products.insertOne({
+    "_id": ObjectId('69a5f5d2f5a30a5da5cb0ce2'),
+    "name": "Chaussures de sport",
+    "unityPrice": 79.99,
+    "category": {
+        "code": "SHOES",
+        "label": "Chaussures"
+    },
+    "shopId": ObjectId("698c5222a4c7623a67cb0ce3"),
+    "description": "Chaussures de sport confortables et stylées.",
+    "status": {
+        "code": "AVAILABLE",
+        "label": "Disponible"
+    },
+    "photos": [
+        {
+            "_id": "photo101",
+            "url": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=300&fit=crop",
+            "createdAt": "2026-01-15",
+            "type": {
+                "code": "MAIN",
+                "label": "Main"
+            }
+        },
+        {
+            "_id": "photo102",
+            "url": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=300&fit=crop",
+            "createdAt": "2026-01-16",
+            "type": {
+                "code": "DETAIL",
+                "label": "Detail"
+            }
+        }
+    ]
 });
