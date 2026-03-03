@@ -13,7 +13,7 @@ const login = async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: 'Mot de passe incorrect' });
 
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { id: user._id, email: user.email, role: user.role.code },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -31,7 +31,7 @@ const post = async function (req, res) {
     user = await user.save();
 
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { id: user._id, email: user.email, role: user.role.code },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );

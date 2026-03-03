@@ -1,5 +1,5 @@
 // middlewares/authMiddleware.js
-module.exports = function (req, res, next) {
+const authMiddleware = function (req, res, next) {
     const publicRoutes = [
         '/auth/login',
         '/auth/signup'
@@ -34,3 +34,21 @@ module.exports = function (req, res, next) {
     }
 
 };
+
+function authorizeRole(...allowedRoles) {
+    return (req, res, next) => {
+        if (!req.user || !req.user.role) {
+            return res.status(403).json({ message: "Accès refusé" });
+        }
+
+        const userRole = req.user.role;
+
+        if (!allowedRoles.includes(userRole)) {
+            return res.status(403).json({ message: "Permission insuffisante" });
+        }
+
+        next();
+    };
+}
+
+module.exports = { authMiddleware, authorizeRole };

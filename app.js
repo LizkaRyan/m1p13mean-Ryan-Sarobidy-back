@@ -6,7 +6,7 @@ var logger = require('morgan');
 require('dotenv').config();
 const cors = require('cors');
 
-const authMiddleware = require('./middlewares/authMiddleware');
+const { authMiddleware } = require('./middlewares/authMiddleware');
 
 var usersRouter = require('./routes/users-router');
 var authRouter = require('./routes/auth-router');
