@@ -17,6 +17,7 @@ var requestEventRouter = require('./routes/requests-event-router');
 var reservationRouter = require('./routes/reservation-router');
 var shopRouter = require('./routes/shop-router');
 var productRouter = require('./routes/product-router');
+var reviewRouter = require('./routes/review-router');
 var db = require('./config/db');
 
 var app = express();
@@ -44,6 +45,7 @@ app.use('/reservations', reservationRouter);
 app.use('/shops', shopRouter);
 app.use('/products', productRouter);
 app.use('/uploads', express.static('uploads'));
+app.use('/reviews', reviewRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

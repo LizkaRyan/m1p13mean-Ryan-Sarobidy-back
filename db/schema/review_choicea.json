@@ -1,18 +1,9 @@
 [
     {
-        "_id": "avis123",
-        "userId": "user123",
-        "boutiqueId": "boutique456",
+        "userId": "698c5124a4c7623a67cb0ce2",
+        "boutiqueId": "69a6307fe65cc05947166328",
         "rating": 4,
         "text": "Très bonne boutique",
-        "createdAt": "2026-01-31",
-        "responses": [
-            {
-                "userId": "boutique456",
-                "text": "Merci pour votre retour",
-                "createdAt": "2026-01-31",
-                "responses": []
-            }
-        ]
+        "createdAt": "2026-01-31"
     }
 ]
