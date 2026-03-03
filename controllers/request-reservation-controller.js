@@ -46,6 +46,7 @@ const patch = async (req, res) => {
     await patchRequestReservationSchema.validate(req.body);
     const { id } = req.params;
     const updateData = req.body; // données envoyées par le client
+    
     // Met à jour et renvoie le document modifié
     const updatedRequestReservation = await RequestReservation.findByIdAndUpdate(
       id,

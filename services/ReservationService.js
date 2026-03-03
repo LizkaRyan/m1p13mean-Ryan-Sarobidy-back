@@ -1,18 +1,20 @@
 const Reservation = require('../models/reservation/Reservation');
 
 const createReservation = async ({ shopId, room, beginingDate, endingDate }) => {
-  const newReservation = {
-    shopId: shopId,
-    roomId: room._id,
-    createdAt: new Date(),
-    paymentHistory: generateMonthlyPayments(beginingDate, endingDate, room.rentPrice),
-    dateMax: endingDate,
-  };
   try {
-    await Reservation.create(newReservation);
+    const newReservation = {
+      shopId: shopId,
+      roomId: room._id,
+      createdAt: new Date(),
+      paymentHistory: generateMonthlyPayments(beginingDate, endingDate, room.rentPrice),
+      dateMax: endingDate,
+    };
+    const reservation = await Reservation.create(newReservation);
+    return reservation;
   } catch (err) {
     throw new Error('Erreur lors de la création de la réservation : ' + err.message);
   }
+  
 }
 
 function generateMonthlyPayments(startDate, endDate, amount) {
