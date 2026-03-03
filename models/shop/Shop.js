@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { shopPhotoSchema } = require('./ShopPhoto');
 
 const shopSchema = new mongoose.Schema({
     name: String,
@@ -8,9 +9,10 @@ const shopSchema = new mongoose.Schema({
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // nom du model
+        ref: "User",
         required: true
     },
+    photos: [shopPhotoSchema] 
 });
 
 module.exports = mongoose.model('Shop', shopSchema);
