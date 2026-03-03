@@ -71,14 +71,20 @@ const patch = async (req, res) => {
 
 const postRequestEvent = async (req, res) => {
     try {
-        const request = new RequestsEvent(req.body);
+        let request = req.body;
         request.status = {
             code: "REQUEST",
             label: "En attente de validation",
             date: new Date()
         };
         request.deletedAt = null;
-        await request.save();
+        request.startDate = new Date(request.startDate);
+        request.startDate.setHours(request.startDate.getHours() + 3); // Correction du décalage horaire
+        request.endDate = request.endDate ? new Date(request.endDate) : null;
+        if(request.endDate) {
+            request.endDate.setHours(request.endDate.getHours() + 3);
+        }
+        request = await RequestsEvent.create(request);
         
         const requests = await getAllRequestsEvent("REQUEST", request.startDate.getFullYear(), request.shopId);
         const events = await findByYear(request.startDate.getFullYear());

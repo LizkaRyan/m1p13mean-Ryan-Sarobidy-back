@@ -5,7 +5,7 @@ const { authorizeRole } = require('../middlewares/authMiddleware');
 
 router.get('', authorizeRole('BOUTIQUE','ADMIN'), requestEventController.findAll);
 router.get('/with-event', authorizeRole('BOUTIQUE','ADMIN'), requestEventController.findWithEvent);
-router.patch('/:id', authorizeRole('BOUTIQUE'), requestEventController.patch);
+router.patch('/:id', authorizeRole('BOUTIQUE','ADMIN'), requestEventController.patch);
 router.post('', authorizeRole('BOUTIQUE'), requestEventController.postRequestEvent);
 
 module.exports = router;
