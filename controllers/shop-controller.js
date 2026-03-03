@@ -32,7 +32,7 @@ const getAllDisponibles = async (req, res) => {
       select: "-status -roomHistory -photos"
     }).populate({
       path: "roomId",
-      select: "name"
+      select: "name floor"
     });
     res.json(reservation);
   }
