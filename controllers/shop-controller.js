@@ -70,38 +70,67 @@ const getByUserId = async (req, res) => {
   }
 };
 
-const create = async (req, res) => {
-  try {
-    const { name, category, userId } = req.body;
-
-    if (!name || !category?.code || !category?.label || !userId) {
-      return res.status(400).json({ message: 'Champs requis manquants : name, category.code, category.label, userId' });
-    }
-
-    const newShop = new Shop({
-      name,
-      category: {
-        code: category.code,
-        label: category.label
-      },
-      userId: new mongoose.Types.ObjectId(userId)
+const buildPhotos = (req) => {
+  const photos = [];
+  if (req.files?.['exteriorPhoto']?.[0]) {
+    photos.push({
+      url: `/uploads/${req.files['exteriorPhoto'][0].filename}`,
+      createdAt: new Date().toISOString(),
+      type: { code: 'EXTERIOR', label: 'Exterior' }
     });
+  }
+  if (req.files?.['interiorPhoto']?.[0]) {
+    photos.push({
+      url: `/uploads/${req.files['interiorPhoto'][0].filename}`,
+      createdAt: new Date().toISOString(),
+      type: { code: 'INTERIOR', label: 'Interior' }
+    });
+  }
+  (req.files?.['diversPhotos'] ?? []).forEach(file => {
+    photos.push({
+      url: `/uploads/${file.filename}`,
+      createdAt: new Date().toISOString(),
+      type: { code: 'DIVERS', label: 'Divers' }
+    });
+  });
+  return photos;
+};
 
-    const saved = await newShop.save();
-    res.status(201).json(saved);
+const save = async (req, res) => {
+  try {
+    console.log('req.files keys:', Object.keys(req.files ?? {}));
+    console.log('exteriorPhoto:', req.files?.['exteriorPhoto']?.[0]?.filename);
+    console.log('interiorPhoto:', req.files?.['interiorPhoto']?.[0]?.filename);
+    const body = {
+      ...req.body,
+      category: JSON.parse(req.body.category),
+      photos: buildPhotos(req)
+    };
+    const shop = await Shop.create(body);
+    res.status(201).json(shop);
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    res.status(400).json({ message: 'Erreur création', error: err.message });
   }
 };
 
 const updateById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, category } = req.body;
+
+    const updateData = {
+      name: req.body.name,
+      category: JSON.parse(req.body.category),
+    };
+
+    // Ajouter les nouvelles photos si envoyées
+    const newPhotos = buildPhotos(req);
+    if (newPhotos.length > 0) {
+      updateData.photos = newPhotos; 
+    }
 
     const updated = await Shop.findByIdAndUpdate(
       id,
-      { name, category },
+      updateData,
       { new: true }
     );
 
@@ -131,4 +160,4 @@ const deleteById = async (req, res) => {
   }
 };
 
-module.exports = { getById, getAllDisponibles, getByUserId, create, updateById, deleteById };
+module.exports = { getById, getAllDisponibles, getByUserId, save, updateById, deleteById };
